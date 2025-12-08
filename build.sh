@@ -68,14 +68,18 @@ done
 
 export NIX_CONFIG="experimental-features = flakes nix-command"
 
-nixBin=$(nix eval --impure --raw --expr "
+shouldDownloadNix=$(nix eval --impure --raw --expr "
     let pkgs = import <nixpkgs> {};
     in with builtins;
     if (compareVersions \"2.31.0\" pkgs.nix.version) > 0
-    then toString (getFlake \"github:NixOS/nixpkgs/nixpkgs-unstable\").legacyPackages.\${pkgs.stdenv.hostPlatform.system}.nix
-    else toString pkgs.nix
+    then \"1\"
+    else \"0\"
 ")
-export PATH="$nixBin/bin:$PATH"
+
+if [ "$shouldDownloadNix" == "1" ]; then
+    nixBin=$(nix build --print-out-paths --no-link --no-use-registries --no-write-lock-file "github:NixOS/nixpkgs/nixpkgs-unstable#nix" | grep -v -e "-man")
+    export PATH="$nixBin/bin:$PATH"
+fi
 
 mkdir -p "$ICEDOS_DIR"
 
