@@ -136,6 +136,9 @@ extraPackages = [
   "pavucontrol", # Sound manager
   # "stremio", # A media torrent aggregator
   "spotify", # A sound media streaming platform
+  "bottles", # not a bottles
+  "ckan", # A KSP mod manager
+  "faugus-launcher",
 ]
 insecurePackages = []
 
@@ -191,10 +194,6 @@ list = ["codium.desktop"]
 [icedos.desktop.gnome.users.work.pinnedApps.shell]
 enable = true
 list = ["steam.desktop", "signal-desktop.desktop", "librewolf.desktop"]
-
-[icedos.desktop.gnome.clock]
-date = true
-weekday = false
 
 [icedos.desktop.users.orfous]
 startupScript = ""
